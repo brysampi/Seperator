@@ -1,11 +1,13 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "./firebase";
-
+export async function login(user: string, pass: string) {
+  return await getUser(user, pass)
+}
 export async function getUser(user: string, pass: string) {
   // console.log("API Key:", process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
   try {
     const usersRef = collection(db, "users");
-    
+
     const que = query(
       usersRef,
       where("username", "==", user),

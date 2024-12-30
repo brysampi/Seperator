@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getUser } from "../firebase/controller";
+import { login } from "../firebase/controller";
 
 export default function LoginPage() {
 
@@ -9,7 +9,6 @@ export default function LoginPage() {
 
     const loginAccount = async (event) => {
         event.preventDefault();
-        // let test;
         setLoading(true)
         if (!user)
             console.log('Input Username')
@@ -17,7 +16,8 @@ export default function LoginPage() {
             if (!pass)
                 console.log('Input Password')
             else
-                await getUser(user, pass).then((response) => {
+                // login('bell', 'password')
+                await login(user, pass).then((response) => {
                     response.forEach((items) => {
                         console.log(items)
                     });
@@ -30,8 +30,6 @@ export default function LoginPage() {
                     // window.location.reload();
                 })
         }
-        // setLoginStatus(test)
-        // setLoginStatus(test)
     }
     return (
         <main>
