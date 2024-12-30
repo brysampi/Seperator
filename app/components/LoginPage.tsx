@@ -7,7 +7,7 @@ export default function LoginPage() {
     const [pass, setPass] = useState('');
     const [loading, setLoading] = useState(false)
 
-    const loginAccount = async (event) => {
+    const loginAccount = async (event: any) => {
         event.preventDefault();
         setLoading(true)
         if (!user)
