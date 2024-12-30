@@ -7,7 +7,7 @@ export default function LoginPage() {
     const [pass, setPass] = useState('');
     const [loading, setLoading] = useState(false)
 
-    const loginAccount = async (event: any) => {
+    const loginAccount = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true)
         if (!user)
@@ -18,7 +18,7 @@ export default function LoginPage() {
             else
                 // login('bell', 'password')
                 await login(user, pass).then((response) => {
-                    response.forEach((items) => {
+                    response.forEach((items: any) => {
                         console.log(items)
                     });
                 }).catch((error) => {
