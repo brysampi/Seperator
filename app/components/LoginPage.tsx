@@ -9,7 +9,7 @@ export default function LoginPage() {
 
     const loginAccount = async (event) => {
         event.preventDefault();
-        let test;
+        // let test;
         setLoading(true)
         if (!user)
             console.log('Input Username')
