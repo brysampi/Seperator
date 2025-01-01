@@ -7,7 +7,7 @@ export default function LoginPage() {
     const [pass, setPass] = useState('');
     const [loading, setLoading] = useState(false)
 
-    const loginAccount = async (event: React.FormEvent<HTMLFormElement>) => {
+    const loginAccount = async (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true)
         if (!user)
@@ -18,7 +18,7 @@ export default function LoginPage() {
             else
                 // login('bell', 'password')
                 await login(user, pass).then((response) => {
-                    response.forEach((items: any) => {
+                    response.forEach((items) => {
                         console.log(items)
                     });
                 }).catch((error) => {
@@ -34,12 +34,12 @@ export default function LoginPage() {
     return (
         <main>
             <div>
-                <form>
+                <form onSubmit={loginAccount}>
                     Username
                     <input type="text" onChange={(e) => { setUser(e.target.value) }} value={user} name="" id="user" />
                     Password
                     <input type="password" onChange={(e) => { setPass(e.target.value) }} value={pass} name="" id="pass" />
-                    <button onClick={loginAccount} disabled={loading}>{loading ? 'Loading' : 'Submit'}</button>
+                    <button disabled={loading}>{loading ? 'Loading' : 'Submit'}</button>
                 </form>
                 {/* <button onClick={setCookie}>Set Cookie</button>
                 <button onClick={updateCookie}>update Cookie</button>
