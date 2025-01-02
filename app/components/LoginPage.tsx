@@ -16,19 +16,19 @@ export default function LoginPage() {
             if (!pass)
                 console.log('Input Password')
             else
-                // login('bell', 'password')
-                await login(user, pass).then((response) => {
-                    response.forEach((items) => {
-                        console.log(items)
-                    });
-                }).catch((error) => {
-                    console.log(error)
-                }).finally(() => {
-                    setUser('')
-                    setPass('')
-                    setLoading(false)
-                    // window.location.reload();
-                })
+                login('bell', 'password')
+                // await login(user, pass).then((response) => {
+                //     response.forEach((items) => {
+                //         console.log(items)
+                //     });
+                // }).catch((error) => {
+                //     console.log(error)
+                // }).finally(() => {
+                //     setUser('')
+                //     setPass('')
+                //     setLoading(false)
+                //     // window.location.reload();
+                // })
         }
     }
     return (

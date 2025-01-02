@@ -1,7 +1,16 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, query, where } from "firebase/firestore";
 import { db } from "./firebase";
+import nookies from 'nookies';
+
 export async function login(user: string, pass: string) {
-  return await getUser(user, pass)
+  const getData = await getUser(user, pass).then((response) => {
+     console.log(Array.isArray(response))
+
+    
+
+    // nookies.set(null, 'user_login', 'login');
+  })
+  return getData
 }
 export async function getUser(user: string, pass: string) {
   // console.log("API Key:", process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
@@ -11,7 +20,8 @@ export async function getUser(user: string, pass: string) {
     const que = query(
       usersRef,
       where("username", "==", user),
-      where("password", "==", pass)
+      where("password", "==", pass),
+      limit(1)
     );
     const querySnapshot = await getDocs(que);
 
@@ -19,13 +29,21 @@ export async function getUser(user: string, pass: string) {
       console.log("No users found");
       return [];
     }
-    const users = querySnapshot.docs.map((doc) => ({
+    // Get Multiple Data
+    // const users = querySnapshot.docs.map((doc) => ({
+    //   id: doc.id,
+    //   ...doc.data(),
+    // }));
+
+    // Get the first data since i use limit
+    const doc = querySnapshot.docs[0];
+
+    const userData = {
       id: doc.id,
       ...doc.data(),
-    }));
-    // console.log('oo pasok')
-    // console.log("Users fetched:", users);
-    return users;
+    };
+
+    return userData;
   } catch (error) {
     console.error("Error fetching users:", error);
     return [];
