@@ -1,5 +1,5 @@
 'use client'
-import AddIncome from "./components/AddIncome";
+// import AddIncome from "./components/AddIncome";
 import LoginPage from "./components/LoginPage";
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
       <br />
       --------------------------
       <br />
-      <AddIncome />
+      {/* <AddIncome /> */}
     </div>
   )
 }
