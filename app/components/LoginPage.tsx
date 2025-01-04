@@ -1,35 +1,45 @@
 import { useState } from "react";
 import { login } from "../firebase/controller";
+// import successMsg 
 
 export default function LoginPage() {
 
     const [user, setUser] = useState('');
     const [pass, setPass] = useState('');
     const [loading, setLoading] = useState(false)
-
     const loginAccount = async (event: React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
         setLoading(true)
-        if (!user)
-            console.log('Input Username')
-        else {
-            if (!pass)
-                console.log('Input Password')
-            else
-                login('bell', 'password')
-                // await login(user, pass).then((response) => {
-                //     response.forEach((items) => {
-                //         console.log(items)
-                //     });
-                // }).catch((error) => {
-                //     console.log(error)
-                // }).finally(() => {
-                //     setUser('')
-                //     setPass('')
-                //     setLoading(false)
-                //     // window.location.reload();
-                // })
+        if (!user) {
+            clearInfos()
+            console.log('Input Username.')
+            return false
         }
+        // else {
+        if (!pass) {
+            clearInfos()
+            console.log('Input Password.')
+            return false
+        }
+        // else
+        // await login('bell', 'password')
+        await login(user, pass).then((response) => {
+            console.log(response)
+            // console.log(!response ? 'No Response' : response)
+            if (response && response.status == 'success') {
+                console.log('Successful LogIn.')
+                // window.location.reload();
+            } else {
+                console.log('Failed to Login.')
+            }
+
+        }).catch((error) => {
+            console.log(error)
+        }).finally(() => {
+            clearInfos()
+            // window.location.reload();
+        })
+        // }
     }
     return (
         <main>
@@ -47,4 +57,10 @@ export default function LoginPage() {
             </div>
         </main>
     )
+
+    function clearInfos() {
+        setUser('')
+        setPass('')
+        setLoading(false)
+    }
 }
