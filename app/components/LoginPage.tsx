@@ -11,20 +11,20 @@ export default function LoginPage() {
         event.preventDefault();
         setLoading(true)
         if (!user) {
-            clearInfos()
+            clearForm()
             console.log('Input Username.')
             return false
         }
         // else {
         if (!pass) {
-            clearInfos()
+            clearForm()
             console.log('Input Password.')
             return false
         }
         // else
         // await login('bell', 'password')
         await login(user, pass).then((response) => {
-            console.log(response)
+            // console.log(response)
             // console.log(!response ? 'No Response' : response)
             if (response && response.status == 'success') {
                 console.log('Successful LogIn.')
@@ -36,7 +36,7 @@ export default function LoginPage() {
         }).catch((error) => {
             console.log(error)
         }).finally(() => {
-            clearInfos()
+            clearForm()
             // window.location.reload();
         })
         // }
@@ -58,7 +58,7 @@ export default function LoginPage() {
         </main>
     )
 
-    function clearInfos() {
+    function clearForm() {
         setUser('')
         setPass('')
         setLoading(false)

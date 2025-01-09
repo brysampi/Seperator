@@ -1,8 +1,8 @@
 'use server'
-import {  collection, getDocs, limit, query, where } from "firebase/firestore";
-// import { cookies } from "next/headers";
+import { addDoc, collection, getDocs, limit, query, where } from "firebase/firestore";
+import { cookies } from "next/headers";
 import { db } from "./firebase";
-// import { errorMsg, successMsg } from './utils'
+import { errorMsg, successMsg } from './utils'
 
 // -------------------------- User -------------------------------------
 export async function getUser(user: string, pass: string) {
@@ -40,41 +40,22 @@ export async function getUser(user: string, pass: string) {
         return [];
     }
 }
-// -------------------------- Income -----------------------------------
-// export async function addIncome(arrayData: any) {
-//     console.log('Income Added.')
-//     const cookieStore = await cookies();
-//     console.log(cookieStore.get('userID')?.value)
-//     return cookieStore.get('userID')?.value
-//     try {
-//         const cookieStore = await cookies();
-//         if (cookieStore)
-//             if (!cookieStore.get('userID')?.value)
-//                 return errorMsg('No LoggedIn User Found.')
-//             else {
-//                 const userID = cookieStore.get('userID')?.value
-//                 const collectionRef = collection(db, 'income')
-//                 await addDoc(collectionRef, {
-//                     description: arrayData.description,
-//                     expected: arrayData.expected,
-//                     amount: arrayData.amount,
-//                     user: userID,
-//                     createdAt: new Date(),
-//                     updatedAt: new Date()
-//                 })
-//                 return successMsg('Successfully Added.')
-//             }
-//         else
-//             return errorMsg('No Cookies Found.')
-//     } catch (error) {
-//         return errorMsg(error)
-//     }
-// }
-
-
-// -------------------------- Adjustment -------------------------------
-// -------------------------- Bills ------------------------------------
-// -------------------------- Expenses ---------------------------------
-// -------------------------- Expense Tracker --------------------------
-// -------------------------- Saving -----------------------------------
-
+export async function addData(table: string, arrayData: { [key: string]: string | number }) {
+    try {
+        const cookieStore = await cookies();
+        if (cookieStore)
+            if (!cookieStore.get('id')?.value)
+                return errorMsg('No LoggedIn User Found.')
+            else {
+                const userID = cookieStore.get('id')?.value
+                const collectionRef = collection(db, table)
+                await addDoc(collectionRef, { ...arrayData, user: userID, createdAt: new Date() })
+                return successMsg('Successfully Added.')
+            }
+        else
+            return errorMsg('No Cookies Found.')
+    } catch (error) {
+        console.log(error)
+        return errorMsg('check console for error.')
+    }
+}
